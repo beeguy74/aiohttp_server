@@ -1,3 +1,4 @@
+from app.web.config import setup_config
 from app.web.middlewares import setup_middlewares
 from app.store import setup_accessors
 from app.store.crm.accessor import CrmAccessor
@@ -26,6 +27,7 @@ class View(AiohttpView):
 app = Application()
 
 def run_app():
+    setup_config(app)
     setup_routes(app)
     setup_aiohttp_apispec(app, title='CRM App', url='/docs/json', swagger_path='/docs')
     setup_middlewares(app)

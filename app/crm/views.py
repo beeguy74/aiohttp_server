@@ -3,9 +3,9 @@ from app.web.schemes import OkResponseSchema
 from app.crm.schemes import ListUsersResponseSchema, UserAddSchema, UserGetRequestSchema, UserGetResponseSchema, UserSchema
 import uuid
 
-from aiohttp_apispec import docs, request_schema, response_schema, querystring_schema
 from app.crm.models import User
 from app.web.app import View
+from aiohttp_apispec import docs, request_schema, response_schema, querystring_schema
 from aiohttp.web_exceptions import HTTPNotFound
 
 class AddUserView(View):
