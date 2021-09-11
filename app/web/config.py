@@ -9,6 +9,8 @@ if typing.TYPE_CHECKING:
 class Config:
     username: str
     password: str
+    db_name: str
+    db_host: str
 
 def setup_config(app: 'Application'):
     with open("config/config.yaml", "r") as f:
@@ -16,5 +18,6 @@ def setup_config(app: 'Application'):
     app.config = Config(
         username = raw_config["credentials"]["username"],
         password = raw_config["credentials"]["password"]
+        db_name=raw_config["credentials"]["db_name"],
+        db_host=raw_config["credentials"]["db_host"],
     )
-
