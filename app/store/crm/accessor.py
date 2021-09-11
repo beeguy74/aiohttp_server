@@ -3,6 +3,7 @@ import typing
 import uuid
 from app.crm.models import User
 from typing import Optional
+from app.store.crm.gino import db
 
 if typing.TYPE_CHECKING:
     from app.web.app import Application
@@ -16,9 +17,9 @@ class CrmAccessor:
     async def connect(self, app: "Application"):
         self.app = app
 
-        # await db.set_bind(f"postgesql://{app.config.db_host}/{app.config.db_name}")
-        # await db.gino.create_all()
-        # await self._on_connect()
+        await db.set_bind(f"postgresql://{app.config.db_host}/{app.config.db_name}")
+        await db.gino.create_all()
+        await self._on_connect()
         
         print("connected to database")
 
@@ -28,7 +29,7 @@ class CrmAccessor:
 
     async def disconnect(self, app: "Application"):
         self.app = None
-        # await db.pop_bind().close()
+        await db.pop_bind().close()
         print("disconnected from database")
 
     async def add_user(self, user: User):

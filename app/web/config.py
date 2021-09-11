@@ -17,7 +17,7 @@ def setup_config(app: 'Application'):
         raw_config = yaml.safe_load(f)
     app.config = Config(
         username = raw_config["credentials"]["username"],
-        password = raw_config["credentials"]["password"]
+        password = raw_config["credentials"]["password"],
         db_name=raw_config["credentials"]["db_name"],
         db_host=raw_config["credentials"]["db_host"],
     )
