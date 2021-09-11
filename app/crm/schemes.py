@@ -6,7 +6,7 @@ class UserAddSchema(Schema):
     email = fields.Str(required=True)
 
 class UserSchema(UserAddSchema):
-    id = fields.UUID(required=True)
+    id = fields.UUID(required=True, attribute='id_')
 
 class UserGetRequestSchema(Schema):
     id = fields.UUID(required=True)

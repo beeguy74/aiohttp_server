@@ -2,6 +2,7 @@
 from typing import Any, Optional
 from aiohttp.web import json_response as aiohttp_json_response
 from aiohttp.web_response import Response
+import base64
 
 
 def json_response(data: Any=None, status: str = 'ok') -> Response:
@@ -24,4 +25,11 @@ def error_json_response(http_status: int, status: str = 'error', message: Option
             'message': str(message),
             'data': data
         })
+
+def check_basic_auth(raw_credentials: str, username: str, password: str) -> bool:
+    credentials = base64.b64decode(raw_credentials).decode()
+    parts = credentials.split(':')
+    if len(parts) != 2:
+        return False
+    return parts[0] == username and parts[1] == password
 

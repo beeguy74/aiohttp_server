@@ -12,3 +12,6 @@ multidict==5.1.0
 typing-extensions==3.10.0.2
 webargs==5.5.3
 yarl==1.6.3
+psycopg2
+gino
+PyYAML==5.4.1

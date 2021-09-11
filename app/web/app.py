@@ -1,3 +1,4 @@
+from app.web.config import Config, setup_config
 from app.web.middlewares import setup_middlewares
 from app.store import setup_accessors
 from app.store.crm.accessor import CrmAccessor
@@ -9,6 +10,7 @@ from app.web.routes import setup_routes
 
 
 class Application(AiohttpApplication):
+    config: Optional[Config] = None
     database: dict = {}
     crm_accessot: Optional[CrmAccessor] = None
 
@@ -25,9 +27,11 @@ class View(AiohttpView):
 
 app = Application()
 
+# application setup
 def run_app():
-    setup_routes(app)
-    setup_aiohttp_apispec(app, title='CRM App', url='/docs/json', swagger_path='/docs')
-    setup_middlewares(app)
-    setup_accessors(app)
-    aiohttp_run_app(app)
+    setup_config(app)#read config from yaml
+    setup_routes(app)#tunes app's routes and connects with "views"
+    setup_aiohttp_apispec(app, title='CRM App', url='/docs/json', swagger_path='/docs')#data validationa and setup swagger on 0.0.0.0:8080/docs
+    setup_middlewares(app)#another validation and error management
+    setup_accessors(app)#works with databases in memory, but we can add sql and something
+    aiohttp_run_app(app)#start app

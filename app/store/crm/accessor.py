@@ -10,6 +10,7 @@ class CrmAccessor:
     def __init__(self):
         self.app: Optional["Application"] = None
 
+    #this called on signal of aiohttp app
     async def connect(self, app: "Application"):
         self.app = app
         try:
@@ -18,6 +19,7 @@ class CrmAccessor:
             self.app.database['users'] = []
         print("connected to database")
 
+    #this called on signal of aiohttp app
     async def disconnect(self, app: "Application"):
         self.app = None
         print("disconnected from database")
