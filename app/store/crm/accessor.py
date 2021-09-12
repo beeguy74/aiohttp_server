@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from app.web.app import Application
 
 
+
 class CrmAccessor:
     def __init__(self):
         self.app: Optional["Application"] = None
