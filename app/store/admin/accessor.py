@@ -13,8 +13,8 @@ class AdminAccessor(BaseAccessor):
     async def connect(self, app: "Application"):
         # TODO: создать админа по данным в config.yml здесь
         await self.create_admin(
-            email=app.config.admin.email,
-            password=app.config.admin.password
+            email=self.app.config.admin.email,
+            password=self.app.config.admin.password
         )
 
     async def get_by_email(self, email: str) -> Optional[Admin]:
@@ -25,7 +25,7 @@ class AdminAccessor(BaseAccessor):
 
     async def create_admin(self, email: str, password: str) -> Admin:
         admin = Admin(
-                id=self.database.next_admin_id,
+                id=self.app.database.next_admin_id,
                 email=email,
                 password=sha256(password.encode()).hexdigest(),
             )

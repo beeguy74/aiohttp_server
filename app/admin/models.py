@@ -9,6 +9,5 @@ class Admin:
     email: str
     password: Optional[str] = None
 
-    @property
     def check_password(self, password: str) -> bool:
         return self.password == sha256(password.encode()).hexdigest()

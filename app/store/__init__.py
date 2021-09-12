@@ -1,6 +1,7 @@
 from app.store.database.database import Database
 from app.store.crm.accessor import CrmAccessor
 import typing
+from app.store.admin.accessor import AdminAccessor
 
 if typing.TYPE_CHECKING:
     from app.web.app import Application
@@ -14,7 +15,6 @@ class Store:
     def __init__(self, app: "Application"):
         # from app.store.quiz.accessor import QuizAccessor
         # self.quizzes = QuizAccessor(app)
-        from app.store.admin.accessor import AdminAccessor
         self.admins = AdminAccessor(app)
 
 

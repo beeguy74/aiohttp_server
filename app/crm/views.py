@@ -13,10 +13,11 @@ class AddUserView(View):
     @request_schema(UserAddSchema)#input data
     @response_schema(OkResponseSchema, 200)#output data
     async def post(self):
+        print(*self.request)
         data = self.request['data']
         user = User(id_=uuid.uuid4(), email=data['email'])
         await self.request.app.crm_accessot.add_user(user)
-        print(self.request.app.database['users'])
+        print(self.request.app.databaseN['users'])
         return json_response()
 
 class ListUsersView(View):

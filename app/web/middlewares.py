@@ -1,16 +1,17 @@
 import json
 from app.web.utils import error_json_response
 import typing
-from aiohttp_apispec.middlewares import validation_middleware
-from aiohttp.web import middleware
 from aiohttp.web_exceptions import HTTPException, HTTPUnprocessableEntity
+from aiohttp.web_middlewares import middleware
+from aiohttp_apispec import validation_middleware
 
 if typing.TYPE_CHECKING:
-    from app.web.app import Application
+    from app.web.app import Application, Request
 
 @middleware
-async def error_handling_middleware(request, handler):
+async def error_handling_middleware(request: "Request", handler):
     try:
+        print("try in midleware")
         response = await handler(request)
         return response
     except HTTPUnprocessableEntity as e:
