@@ -26,10 +26,3 @@ def error_json_response(http_status: int, status: str = 'error', message: Option
             'data': data
         })
 
-def check_basic_auth(raw_credentials: str, username: str, password: str) -> bool:
-    credentials = base64.b64decode(raw_credentials).decode()
-    parts = credentials.split(':')
-    if len(parts) != 2:
-        return False
-    return parts[0] == username and parts[1] == password
-

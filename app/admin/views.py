@@ -1,15 +1,13 @@
+from app.web.mixins import AuthRequiredMixin
 from aiohttp_apispec import docs, request_schema, response_schema, querystring_schema
 from app.admin.schemes import AdminResponseSchema, AdminSchema
 from aiohttp.web_response import json_response
 from app.web.app import View
 from aiohttp_session import new_session
-from aiohttp.web_exceptions import HTTPForbidden
-
-class AdminCurrentView(View):
-    async def get(self):
-        raise NotImplementedError
+from aiohttp.web_exceptions import HTTPForbidden, HTTPUnauthorized
 
 class AdminLoginView(View):
+    @docs(tags=['admin'], summary='login', description='Return auth cookie by email and password')
     @request_schema(AdminSchema)
     @response_schema(AdminResponseSchema, 200)
     async def post(self):
@@ -22,9 +20,16 @@ class AdminLoginView(View):
             raise HTTPForbidden
 
         session = await new_session(self.request)
-        session['admin'] = email
+        raw_admin = AdminResponseSchema().dump(admin)
+        session['admin'] = raw_admin
+        return json_response(data={'admin': raw_admin})
 
-        # return json_response(data={'admin': AdminResponseSchema().dump(admin)})
-        return json_response()
 
+class AdminCurrentView(AuthRequiredMixin, View):
+    @docs(tags=['admin'], summary='Check auth cookie', description='Return admin email and id by cookie')
+    @response_schema(AdminResponseSchema, 200)
+    async def get(self):
+        # if self.request.admin is None:
+        #     raise HTTPUnauthorized
+        return json_response(data={'admin': AdminResponseSchema().dump(self.request.admin)})
 

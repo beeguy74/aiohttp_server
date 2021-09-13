@@ -4,8 +4,6 @@ session:
 admin:
   email: admin@admin.com
   password: admin
-credentials:
-  username: kts
-  password: password
+postgresDb:
   db_host: localhost
   db_name: demo

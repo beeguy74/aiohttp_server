@@ -1,12 +1,31 @@
+from app.admin.models import Admin
 import json
+
+from aiohttp_session import get_session
+from marshmallow.fields import Email
 from app.web.utils import error_json_response
 import typing
-from aiohttp.web_exceptions import HTTPException, HTTPUnprocessableEntity
+from aiohttp.web_exceptions import HTTPException, HTTPForbidden, HTTPUnauthorized, HTTPUnprocessableEntity
 from aiohttp.web_middlewares import middleware
 from aiohttp_apispec import validation_middleware
 
 if typing.TYPE_CHECKING:
     from app.web.app import Application, Request
+
+#Add "admin" to the request from the cookie
+@middleware
+async def auth_middleware(request: "Request", handler):
+    session = await get_session(request)
+    if request.cookies.get('AIOHTTP_SESSION') and not session.get('admin'): #invalid cookie
+        raise HTTPForbidden
+    if session.get('admin'):
+        request.admin = Admin(
+            id=session['admin']['id'],
+            email=session['admin']['email'],
+        )
+    else:
+        request.admin = None
+    return await handler(request)
 
 @middleware
 async def error_handling_middleware(request: "Request", handler):
@@ -23,6 +42,7 @@ async def error_handling_middleware(request: "Request", handler):
 
 
 def setup_middlewares(app: "Application"):
+    app.middlewares.append(auth_middleware)
     app.middlewares.append(error_handling_middleware)
     app.middlewares.append(validation_middleware)
 

@@ -7,4 +7,4 @@ class AdminSchema(Schema):
 
 class AdminResponseSchema(Schema):
     id = fields.Int()
-    email = fields.Email()
+    email = fields.Str()
