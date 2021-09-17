@@ -6,7 +6,7 @@
 This is a backend of MiniCRM implemented on aiohttp. Currently, there are only five types of requests.
 
 After starting the server, you can view them in:
-Swagger UI at http://localhost:8080/docs/json
+Swagger UI at http://localhost:8080/docs#/
 
 or RAW json at http://localhost:8080/docs/json
 
