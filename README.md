@@ -6,14 +6,14 @@
 This is a backend of MiniCRM implemented on aiohttp. Currently, there are only five types of requests.
 
 After starting the server, you can view them in:
-Swagger UI at http://0.0.0.0:8080/docs#/
+Swagger UI at http://localhost:8080/docs/json
 
-or RAW json at http://0.0.0.0:8080/docs/json
+or RAW json at http://localhost:8080/docs/json
 
 
 ## How to.
 
-- Add the cookie secret key and administrator credentials to the config.yaml file.
+- Add the cookie secret key and administrator credentials to the config.yaml.
 - Then you can log in and use the rest of the methods.
 
 ## About the project.
